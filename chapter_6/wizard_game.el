@@ -111,6 +111,8 @@
 
 ;; Major mode and trigger function
 
+(require 'comint)
+
 (setq max-lisp-eval-depth 10000)  ;; needed for tweak-text
 
 (defvar wizard-game-prompt "> ")
@@ -144,7 +146,8 @@
 	(start-process "wizard-game" (current-buffer) "hexl")
       (file-error (start-process "wizard-game" (current-buffer) "cat")))
     (set-process-query-on-exit-flag (wizard-game-process) nil)
-    (wizard-game-output wizard-game-prompt)
+    (wizard-game-output "*** Wizard's Game ***  Ported from Land of Lisp\n")
+    (wizard-game-output (concat (game-eval-print '(look)) "\n" wizard-game-prompt))
     (goto-char (point-max))))
 
 (defun wizard-game ()
